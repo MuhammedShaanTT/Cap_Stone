@@ -40,6 +40,13 @@ export async function request(endpoint, options = {}) {
   });
 
   if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      setAuthToken(null);
+      localStorage.removeItem('aura_user');
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('aura:session-expired'));
+      }
+    }
     let errorDetail = response.statusText;
     try {
       const errorJson = await response.json();

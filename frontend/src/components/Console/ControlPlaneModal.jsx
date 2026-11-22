@@ -21,6 +21,15 @@ export default function ControlPlaneModal({ isOpen, onClose, initialView }) {
     if (isOpen) {
       checkAuthAndLoad();
     }
+
+    const handleSessionExpired = () => {
+      setUser(null);
+      setProjects([]);
+      setSelectedProjectId('');
+    };
+
+    window.addEventListener('aura:session-expired', handleSessionExpired);
+    return () => window.removeEventListener('aura:session-expired', handleSessionExpired);
   }, [isOpen]);
 
   const checkAuthAndLoad = async () => {
@@ -45,6 +54,12 @@ export default function ControlPlaneModal({ isOpen, onClose, initialView }) {
       }
     } catch (err) {
       console.error('Failed to load projects:', err);
+      if (err.message && (err.message.includes('401') || err.message.includes('403'))) {
+        authService.logout();
+        setUser(null);
+        setProjects([]);
+        setSelectedProjectId('');
+      }
     } finally {
       setLoading(false);
     }
@@ -73,6 +88,10 @@ export default function ControlPlaneModal({ isOpen, onClose, initialView }) {
 
   const handleCreateVersion = async (e) => {
     e.preventDefault();
+    if (!selectedProjectId) {
+      alert('Please select or wait for an active project to load before registering a version.');
+      return;
+    }
     if (!newVersionInput.trim()) return;
     try {
       await projectService.createAppVersion(selectedProjectId, newVersionInput.trim());
