@@ -1,0 +1,121 @@
+/* ==========================================================================
+   HERO COMPONENT STYLES
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  padding: 5rem 0 4rem 0;
+  background: radial-gradient(1200px circle at 50% -10%, rgba(235, 20, 76, 0.04) 0%, rgba(255, 255, 255, 0) 100%),
+              radial-gradient(800px circle at 90% 20%, rgba(37, 99, 235, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 3.5rem;
+  }
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero-headline {
+  color: var(--brand-dark);
+}
+
+.hero-headline span.highlight {
+  color: var(--sauce-red);
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.hero-trust-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.hero-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Dashboard Mockup Shell */
+.preview-shell {
+  background: var(--brand-dark);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-dark);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  color: #fff;
+  transition: transform var(--transition-normal);
+}
+
+.preview-shell:hover {
+  transform: translateY(-2px);
+}
+
+.preview-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+}
+
+.preview-dots {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.preview-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.preview-tab-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.preview-tab-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preview-tab-btn.active {
+  background: var(--sauce-red);
+  color: #fff;
+}
+
+.preview-body {
+  padding: 1.25rem;
+}

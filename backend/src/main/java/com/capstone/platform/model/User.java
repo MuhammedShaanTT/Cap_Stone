@@ -1,0 +1,44 @@
+package com.capstone.platform.model;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
+
+import java.time.Instant;
+import java.util.Set;
+
+/**
+ * User entity — authentication and authorization.
+ * Passwords are stored as BCrypt hashes, never plaintext.
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = "users")
+public class User {
+
+    @Id
+    private String id;
+
+    @Indexed(unique = true)
+    private String email;
+
+    private String displayName;
+
+    private String passwordHash;
+
+    @Builder.Default
+    private String role = "MEMBER";  // ADMIN, MEMBER, VIEWER
+
+    @Builder.Default
+    private Set<String> permissions = Set.of();
+
+    @CreatedDate
+    private Instant createdAt;
+}

@@ -1,0 +1,34 @@
+=============================================================================
+MOBILE QUALITY PLATFORM - DEFECT TEST LOG (CRASH & VULNERABILITY TRACE)
+Target App: com.example.calculator (v1.0.0-defect-build)
+Device: Google Pixel 7 (Android 14, API 34)
+Test Runner: Appium 2.4.1 + UiAutomator2 Server v5.12.0
+=============================================================================
+
+[2024-01-15 10:14:02.112] INFO  [TestRunner] Launching application package com.example.calculator...
+[2024-01-15 10:14:03.450] INFO  [TestRunner] Application launched. Current activity: .MainActivity
+[2024-01-15 10:14:04.200] WARN  [SecurityScanner] [CWE-319] Cleartext HTTP traffic detected to http://api.calculator.example/v1/sync
+[2024-01-15 10:14:04.205] WARN  [SecurityScanner] [CWE-489] Application running in debuggable mode (android:debuggable="true")
+[2024-01-15 10:14:05.890] ERROR [SecurityScanner] [CWE-798] Hardcoded API Token detected: AIzaSyD9x4_SAMPLE_SECRET_KEY_99
+[2024-01-15 10:14:07.120] INFO  [TestRunner] Executing Step 1: Click button 'btn_5' -> SUCCESS
+[2024-01-15 10:14:08.010] INFO  [TestRunner] Executing Step 2: Click button 'btn_plus' -> SUCCESS
+[2024-01-15 10:14:09.115] INFO  [TestRunner] Executing Step 3: Click button 'btn_login_submit'...
+[2024-01-15 10:14:13.250] ERROR [TestRunner] Step 3 FAILED with exception:
+org.openqa.selenium.NoSuchElementException: An element could not be located on the page using the given search parameters: By.id("btn_login_submit")
+    at io.appium.java_client.pagefactory.AppiumElementLocator.findElement(AppiumElementLocator.java:120)
+    at com.example.calculator.test.LoginFlowTest.testSubmit(LoginFlowTest.java:54)
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+Caused by: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for presence of element located by: By.id("btn_login_submit") (tried for 4 second(s))
+
+=============================================================================
+AUTOMATED AI SELF-HEALING ANALYSIS INITIATED
+=============================================================================
+[AI-Healer] Analyzing UI DOM tree before and after application update...
+[AI-Healer] Detected renamed UI element:
+    Old Resource ID: id/btn_login_submit
+    New Resource ID: id/btn_submit_login_v2
+    Semantic Similarity Match: 95.4%
+    Visual Coordinates: Bounds [540, 1820, 980, 1960]
+[AI-Healer] Recommendation: Patch locator to By.id("btn_submit_login_v2") (Confidence: 0.95)
+=============================================================================

@@ -1,0 +1,184 @@
+{
+  "testSuite": "Calculator App Regression Tests",
+  "generatedBy": "manual",
+  "testCases": [
+    {
+      "name": "Login Flow Test",
+      "category": "FUNCTIONAL",
+      "priority": "HIGH",
+      "preconditions": [
+        "App is installed and user is on login screen"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "action": "CLICK",
+          "target": "email_input",
+          "value": "test@example.com",
+          "description": "Enter email address"
+        },
+        {
+          "order": 2,
+          "action": "CLICK",
+          "target": "password_input",
+          "value": "password123",
+          "description": "Enter password"
+        },
+        {
+          "order": 3,
+          "action": "CLICK",
+          "target": "login_button",
+          "value": null,
+          "description": "Tap login button"
+        }
+      ],
+      "expectedResults": [
+        "Login succeeds without error",
+        "Dashboard screen is displayed",
+        "Welcome message shows user name"
+      ]
+    },
+    {
+      "name": "Basic Addition Test",
+      "category": "FUNCTIONAL",
+      "priority": "HIGH",
+      "preconditions": [
+        "App is open on calculator screen"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "action": "CLICK",
+          "target": "button_5",
+          "value": null,
+          "description": "Press 5"
+        },
+        {
+          "order": 2,
+          "action": "CLICK",
+          "target": "button_plus",
+          "value": null,
+          "description": "Press +"
+        },
+        {
+          "order": 3,
+          "action": "CLICK",
+          "target": "button_3",
+          "value": null,
+          "description": "Press 3"
+        },
+        {
+          "order": 4,
+          "action": "CLICK",
+          "target": "button_equals",
+          "value": null,
+          "description": "Press ="
+        }
+      ],
+      "expectedResults": [
+        "Display shows 8",
+        "No error messages shown"
+      ]
+    },
+    {
+      "name": "Division by Zero Handling",
+      "category": "ERROR_HANDLING",
+      "priority": "CRITICAL",
+      "preconditions": [
+        "App is open on calculator screen"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "action": "CLICK",
+          "target": "button_7",
+          "value": null,
+          "description": "Press 7"
+        },
+        {
+          "order": 2,
+          "action": "CLICK",
+          "target": "button_divide",
+          "value": null,
+          "description": "Press /"
+        },
+        {
+          "order": 3,
+          "action": "CLICK",
+          "target": "button_0",
+          "value": null,
+          "description": "Press 0"
+        },
+        {
+          "order": 4,
+          "action": "CLICK",
+          "target": "button_equals",
+          "value": null,
+          "description": "Press ="
+        }
+      ],
+      "expectedResults": [
+        "App does NOT crash",
+        "Error message displayed: Cannot divide by zero",
+        "Calculator remains usable"
+      ]
+    },
+    {
+      "name": "Navigation Back Button Test",
+      "category": "UI",
+      "priority": "MEDIUM",
+      "preconditions": [
+        "User is on settings screen"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "action": "CLICK",
+          "target": "back_button",
+          "value": null,
+          "description": "Press back button"
+        }
+      ],
+      "expectedResults": [
+        "Returns to previous screen",
+        "No data loss"
+      ]
+    },
+    {
+      "name": "App Rotation Stability",
+      "category": "UI",
+      "priority": "MEDIUM",
+      "preconditions": [
+        "App is open with calculation in progress (5 + 3 entered)"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "action": "ROTATE",
+          "target": "device",
+          "value": "LANDSCAPE",
+          "description": "Rotate device to landscape"
+        },
+        {
+          "order": 2,
+          "action": "WAIT",
+          "target": null,
+          "value": "2000",
+          "description": "Wait 2 seconds"
+        },
+        {
+          "order": 3,
+          "action": "ROTATE",
+          "target": "device",
+          "value": "PORTRAIT",
+          "description": "Rotate back to portrait"
+        }
+      ],
+      "expectedResults": [
+        "App does not crash on rotation",
+        "Calculation state is preserved",
+        "Display still shows 5 + 3"
+      ]
+    }
+  ]
+}

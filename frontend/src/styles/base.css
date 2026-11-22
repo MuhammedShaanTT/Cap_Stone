@@ -1,0 +1,172 @@
+/* ==========================================================================
+   GLOBAL BASE STYLES & UTILITIES
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-white);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.display-1 {
+  font-size: clamp(2.5rem, 5vw + 1rem, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.display-2 {
+  font-size: clamp(2rem, 3.5vw + 0.5rem, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.subheading {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Pills & Badges */
+.pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  background: var(--sauce-red-subtle);
+  color: var(--sauce-red);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(235, 20, 76, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--sauce-red);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(235, 20, 76, 0.7);
+  animation: pulse 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(235, 20, 76, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(235, 20, 76, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(235, 20, 76, 0); }
+}
+
+/* Button Component Suite */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  border: 1px solid transparent;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn-sauce {
+  background-color: var(--sauce-red);
+  color: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-sauce:hover {
+  background-color: var(--sauce-red-hover);
+  box-shadow: var(--shadow-red);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-main);
+  border-color: var(--border-light);
+}
+
+.btn-outline:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--text-secondary);
+}
+
+.btn-dark {
+  background-color: var(--brand-dark);
+  color: #ffffff;
+}
+
+.btn-dark:hover {
+  background-color: var(--brand-navy);
+  transform: translateY(-1px);
+}
+
+.btn-sm {
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+}
+
+/* Section Common Layouts */
+.section-intro {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.section-intro .pill-badge {
+  margin-bottom: 1rem;
+}
+
+.section-intro h2 {
+  margin-bottom: 1rem;
+}
+
+/* Code Snippet Styles */
+.code-inline {
+  font-family: var(--font-mono);
+  background: rgba(15, 23, 42, 0.06);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--sauce-red);
+}

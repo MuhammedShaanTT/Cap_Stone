@@ -1,0 +1,75 @@
+/* ==========================================================================
+   TRUST & CREDIBILITY BAR STYLES
+   ========================================================================== */
+.trust-section {
+  padding: 3.5rem 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-light);
+}
+
+.trust-heading {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2rem;
+}
+
+.trust-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.75;
+}
+
+.trust-logo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  letter-spacing: -0.02em;
+}
+
+.trust-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+@media (min-width: 768px) {
+  .trust-stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.trust-stat-card {
+  text-align: center;
+}
+
+.trust-stat-number {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--brand-dark);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.25rem;
+}
+
+.trust-stat-number span {
+  color: var(--sauce-red);
+}
+
+.trust-stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}

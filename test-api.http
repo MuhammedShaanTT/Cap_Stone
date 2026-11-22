@@ -1,0 +1,232 @@
+### ============================================
+### Mobile AI Quality Platform - API Test Script
+### ============================================
+### Use this file with VS Code REST Client extension
+### or IntelliJ HTTP Client to test all endpoints.
+### Run requests top-to-bottom in order.
+### ============================================
+
+### ---- VARIABLES ----
+@baseUrl = http://localhost:8080/api/v1
+@contentType = application/json
+
+### =====================
+### 1. REGISTER USER
+### =====================
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "alice@example.com",
+  "displayName": "Alice Tester",
+  "password": "password123"
+}
+
+### Save the accessToken from the response above!
+### Replace the token below with the one you received.
+
+@token = {{register.response.body.accessToken}}
+
+### =====================
+### 2. LOGIN USER
+### =====================
+
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+### =====================
+### 3. CREATE PROJECT
+### =====================
+
+# @name createProject
+POST {{baseUrl}}/projects
+Content-Type: {{contentType}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "name": "My Test Android App",
+  "description": "A sample Android app for testing the platform"
+}
+
+### =====================
+### 4. LIST MY PROJECTS
+### =====================
+GET {{baseUrl}}/projects
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 5. GET PROJECT BY ID
+### =====================
+GET {{baseUrl}}/projects/{{createProject.response.body.id}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 6. CREATE APP VERSION
+### =====================
+
+# @name createVersion
+POST {{baseUrl}}/projects/{{createProject.response.body.id}}/app-versions
+Content-Type: {{contentType}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "version": "1.0.0",
+  "platform": "ANDROID",
+  "packageName": "com.example.testapp",
+  "versionCode": "1"
+}
+
+### =====================
+### 7. LIST APP VERSIONS
+### =====================
+GET {{baseUrl}}/projects/{{createProject.response.body.id}}/app-versions
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 7B. UPLOAD DUMMY APK
+### =====================
+POST {{baseUrl}}/projects/{{createProject.response.body.id}}/app-versions/{{createVersion.response.body.id}}/upload
+Authorization: Bearer {{login.response.body.accessToken}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="sample-app-v1.0.0.apk"
+Content-Type: application/vnd.android.package-archive
+
+< ./test-data/sample-app-v1.0.0.apk
+--WebAppBoundary--
+
+### =====================
+### 8. CREATE TEST CASE
+### =====================
+
+# @name createTestCase
+POST {{baseUrl}}/projects/{{createProject.response.body.id}}/test-cases
+Content-Type: {{contentType}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "name": "Login Flow Test",
+  "category": "FUNCTIONAL",
+  "priority": "HIGH",
+  "appVersionId": "{{createVersion.response.body.id}}",
+  "preconditions": ["App is installed and user is on login screen"],
+  "expectedResults": ["Login successful", "Dashboard displayed"]
+}
+
+### =====================
+### 9. LIST TEST CASES
+### =====================
+GET {{baseUrl}}/projects/{{createProject.response.body.id}}/test-cases
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 10. CREATE TEST RUN
+### =====================
+
+# @name createTestRun
+POST {{baseUrl}}/test-cases/{{createTestCase.response.body.id}}/test-runs
+Content-Type: {{contentType}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "appVersionId": "{{createVersion.response.body.id}}",
+  "executedBy": "Appium-UiAutomator2-Worker",
+  "environment": "Pixel_7_Android_14"
+}
+
+### =====================
+### 11. LIST TEST RUNS
+### =====================
+GET {{baseUrl}}/test-cases/{{createTestCase.response.body.id}}/test-runs
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 12. CREATE PIPELINE RUN
+### =====================
+
+# @name createPipeline
+POST {{baseUrl}}/projects/{{createProject.response.body.id}}/pipeline-runs
+Content-Type: {{contentType}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "commitSha": "abc123def456",
+  "branch": "main",
+  "triggerType": "MANUAL"
+}
+
+### =====================
+### 13. LIST PIPELINE RUNS
+### =====================
+GET {{baseUrl}}/projects/{{createProject.response.body.id}}/pipeline-runs
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 14. CREATE SECURITY SCAN
+### =====================
+
+# @name createScan
+POST {{baseUrl}}/projects/{{createProject.response.body.id}}/security-scans
+Content-Type: {{contentType}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+  "appVersionId": "{{createVersion.response.body.id}}",
+  "scanner": "MOBSF",
+  "scannerVersion": "3.9.0"
+}
+
+### =====================
+### 15. LIST SECURITY SCANS
+### =====================
+GET {{baseUrl}}/projects/{{createProject.response.body.id}}/security-scans
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 15B. GET SECURITY FINDINGS
+### =====================
+GET {{baseUrl}}/security-scans/{{createScan.response.body.id}}/findings
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 15C. RUN QUALITY ANALYSIS (GEMINI AI + DEFECT SCAN)
+### =====================
+
+# @name qualityAnalysis
+POST {{baseUrl}}/projects/{{createProject.response.body.id}}/run-quality-analysis
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 15D. APPROVE HEALING PROPOSAL
+### =====================
+POST {{baseUrl}}/healing-proposals/{{qualityAnalysis.response.body.healingProposal.id}}/approve
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 15E. VERIFY HEALING PROPOSAL
+### =====================
+POST {{baseUrl}}/healing-proposals/{{qualityAnalysis.response.body.healingProposal.id}}/verify
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 16. GET DASHBOARD
+### =====================
+GET {{baseUrl}}/projects/{{createProject.response.body.id}}/dashboard
+Authorization: Bearer {{login.response.body.accessToken}}
+
+### =====================
+### 17. HEALTH CHECK
+### =====================
+GET http://localhost:8080/actuator/health
+
+### =====================
+### 18. SWAGGER UI
+### =====================
+### Open in browser: http://localhost:8080/swagger-ui.html

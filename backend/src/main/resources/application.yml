@@ -1,0 +1,91 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mobile-ai-quality-platform
+
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/maqp}
+      database: ${MONGODB_DATABASE:maqp}
+
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+# JWT Configuration
+app:
+  jwt:
+    secret: ${JWT_SECRET:this-is-a-dev-secret-key-change-in-prod-minimum-32-bytes!}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+    refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000}
+
+  # AI Service
+  ai-service:
+    base-url: ${AI_SERVICE_URL:http://localhost:8000}
+    timeout-seconds: ${AI_SERVICE_TIMEOUT:60}
+
+  # Gemini AI Configuration
+  gemini:
+    api-key: ${GEMINI_API_KEY:}
+    model: ${GEMINI_MODEL:gemini-2.5-flash}
+
+  # Appium
+  appium:
+    server-url: ${APPIUM_URL:http://localhost:4723}
+
+  # Artifact Storage
+  artifacts:
+    base-path: ${ARTIFACT_STORAGE_PATH:./data/artifacts}
+    max-size-mb: ${ARTIFACT_MAX_SIZE_MB:500}
+
+  # Security Scanners
+  scanners:
+    mobsf:
+      url: ${MOBSF_URL:http://localhost:8001}
+      api-key: ${MOBSF_API_KEY:}
+    zap:
+      url: ${ZAP_URL:http://localhost:8090}
+      api-key: ${ZAP_API_KEY:}
+
+  # CORS
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  health:
+    mongo:
+      enabled: false
+
+# OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+
+# Logging
+logging:
+  level:
+    com.capstone.platform: DEBUG
+    org.springframework.security: INFO
+    org.springframework.data.mongodb: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

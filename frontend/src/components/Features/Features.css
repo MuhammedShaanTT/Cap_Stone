@@ -1,0 +1,70 @@
+/* ==========================================================================
+   FEATURES SECTION STYLES
+   ========================================================================== */
+.features-section {
+  padding: 6rem 0;
+}
+
+.feature-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3.5rem;
+  align-items: center;
+  margin-bottom: 6rem;
+}
+
+.feature-row:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1024px) {
+  .feature-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .feature-row.reverse {
+    direction: rtl;
+  }
+  .feature-row.reverse > * {
+    direction: ltr;
+  }
+}
+
+.feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.feature-text h3 {
+  font-size: clamp(1.75rem, 2.5vw, 2.4rem);
+}
+
+.feature-benefits-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0.5rem 0;
+}
+
+.feature-benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.feature-benefit-item span.check {
+  color: var(--sauce-red);
+  font-weight: 800;
+}
+
+.feature-preview-box {
+  background: #0f172a;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-dark);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-xl);
+  color: #fff;
+}

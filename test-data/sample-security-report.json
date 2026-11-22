@@ -1,0 +1,75 @@
+{
+  "scanReport": {
+    "scanner": "MOBSF",
+    "scannerVersion": "3.9.0",
+    "scanDate": "2024-01-15T10:30:00Z",
+    "appInfo": {
+      "packageName": "com.example.calculator",
+      "version": "1.0.0",
+      "minSdk": 21,
+      "targetSdk": 34
+    }
+  },
+  "findings": [
+    {
+      "ruleId": "android_insecure_connection",
+      "title": "Application allows cleartext HTTP traffic",
+      "severity": "HIGH",
+      "confidence": "HIGH",
+      "description": "The AndroidManifest.xml has android:usesCleartextTraffic=true, allowing unencrypted HTTP connections.",
+      "remediation": "Set android:usesCleartextTraffic to false in AndroidManifest.xml and use HTTPS for all network calls.",
+      "location": "AndroidManifest.xml:12",
+      "cweId": "CWE-319"
+    },
+    {
+      "ruleId": "android_debug_enabled",
+      "title": "Application is debuggable",
+      "severity": "HIGH",
+      "confidence": "HIGH",
+      "description": "The android:debuggable flag is set to true in the manifest, which should never be enabled in production.",
+      "remediation": "Remove android:debuggable=true from AndroidManifest.xml for release builds.",
+      "location": "AndroidManifest.xml:8",
+      "cweId": "CWE-489"
+    },
+    {
+      "ruleId": "hardcoded_secret",
+      "title": "Hardcoded API key found in source code",
+      "severity": "CRITICAL",
+      "confidence": "MEDIUM",
+      "description": "A string resembling an API key was found hardcoded: AIzaSy***redacted***.",
+      "remediation": "Move API keys to environment variables or a secure key management system.",
+      "location": "com/example/calculator/api/ApiClient.java:15",
+      "cweId": "CWE-798"
+    },
+    {
+      "ruleId": "weak_crypto",
+      "title": "Use of weak cryptographic algorithm (MD5)",
+      "severity": "MEDIUM",
+      "confidence": "HIGH",
+      "description": "MD5 hashing is used for data integrity checks. MD5 is considered cryptographically broken.",
+      "remediation": "Replace MD5 with SHA-256 or stronger.",
+      "location": "com/example/calculator/util/HashUtil.java:22",
+      "cweId": "CWE-328"
+    },
+    {
+      "ruleId": "exported_component",
+      "title": "Exported activity without permission",
+      "severity": "MEDIUM",
+      "confidence": "HIGH",
+      "description": "MainActivity is exported without requiring any permission, potentially allowing unauthorized access.",
+      "remediation": "Add android:permission attribute or set android:exported=false if not needed externally.",
+      "location": "AndroidManifest.xml:20",
+      "cweId": "CWE-926"
+    },
+    {
+      "ruleId": "insecure_data_storage",
+      "title": "Sensitive data stored in SharedPreferences without encryption",
+      "severity": "MEDIUM",
+      "confidence": "MEDIUM",
+      "description": "User credentials appear to be stored in SharedPreferences without encryption.",
+      "remediation": "Use EncryptedSharedPreferences from the AndroidX Security library.",
+      "location": "com/example/calculator/data/UserPrefs.java:30",
+      "cweId": "CWE-312"
+    }
+  ]
+}

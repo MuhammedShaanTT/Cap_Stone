@@ -1,0 +1,22 @@
+{
+  "name": "aura-quality-cloud-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Enterprise SaaS Frontend for Mobile AI Quality Platform inspired by Sauce Labs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sync-backend": "vite build --outDir ../backend/src/main/resources/static"
+  },
+  "dependencies": {
+    "lucide-react": "^1.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.2.0"
+  }
+}
