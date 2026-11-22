@@ -2,6 +2,18 @@
 #  Mobile AI Quality Platform - PowerShell Startup Script
 # =============================================================================
 
+# Load .env variables if present
+$envFile = Join-Path $PSScriptRoot ".env"
+if (Test-Path $envFile) {
+    Get-Content $envFile | ForEach-Object {
+        $line = $_.Trim()
+        if ($line -and -not $line.StartsWith("#") -and $line.Contains("=")) {
+            $parts = $line.Split("=", 2)
+            [System.Environment]::SetEnvironmentVariable($parts[0].Trim(), $parts[1].Trim(), "Process")
+        }
+    }
+}
+
 Write-Host "=================================================================" -ForegroundColor Cyan
 Write-Host "   STARTING MOBILE AI QUALITY PLATFORM                          " -ForegroundColor Yellow
 Write-Host "=================================================================" -ForegroundColor Cyan

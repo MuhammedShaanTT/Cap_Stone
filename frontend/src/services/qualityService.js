@@ -7,6 +7,12 @@ export const qualityService = {
     });
   },
 
+  async generateAiTestPlan(projectId, versionId) {
+    return await request(`/projects/${projectId}/app-versions/${versionId}/generate-ai-plan`, {
+      method: 'POST'
+    });
+  },
+
   async uploadApk(projectId, versionId, file, versionName) {
     const formData = new FormData();
     formData.append('file', file);

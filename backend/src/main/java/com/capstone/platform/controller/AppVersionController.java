@@ -1,7 +1,9 @@
 package com.capstone.platform.controller;
 
+import com.capstone.platform.dto.aiplan.AiTestPlanResponse;
 import com.capstone.platform.dto.appversion.AppVersionResponse;
 import com.capstone.platform.dto.appversion.CreateAppVersionRequest;
+import com.capstone.platform.service.AiTestPlanService;
 import com.capstone.platform.service.AppVersionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -25,9 +27,11 @@ import java.util.List;
 public class AppVersionController {
 
     private final AppVersionService appVersionService;
+    private final AiTestPlanService aiTestPlanService;
 
-    public AppVersionController(AppVersionService appVersionService) {
+    public AppVersionController(AppVersionService appVersionService, AiTestPlanService aiTestPlanService) {
         this.appVersionService = appVersionService;
+        this.aiTestPlanService = aiTestPlanService;
     }
 
     @PostMapping
@@ -68,6 +72,15 @@ public class AppVersionController {
             @RequestParam(value = "version", required = false) String version,
             @RequestParam("file") MultipartFile file) {
         AppVersionResponse response = appVersionService.uploadApkDirect(projectId, version, file);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/{versionId}/generate-ai-plan")
+    @Operation(summary = "Generate AI Test Plan, structured Test Cases, and Application Improvements using Gemini 2.5")
+    public ResponseEntity<AiTestPlanResponse> generateAiPlan(
+            @PathVariable String projectId,
+            @PathVariable String versionId) {
+        AiTestPlanResponse response = aiTestPlanService.generateAndSaveTestPlan(projectId, versionId);
         return ResponseEntity.ok(response);
     }
 }

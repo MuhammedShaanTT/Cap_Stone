@@ -11,6 +11,13 @@ echo.
 
 cd /d "%~dp0"
 
+REM Load .env variables if present
+if exist ".env" (
+    for /f "usebackq tokens=1,* delims==" %%a in (".env") do (
+        set "%%a=%%b"
+    )
+)
+
 REM Step 1: Check MongoDB Connectivity
 echo [1/2] Checking MongoDB connection on localhost:27017...
 powershell -NoProfile -Command "try { $client = New-Object System.Net.Sockets.TcpClient('127.0.0.1', 27017); $client.Close(); Write-Host '  -> External MongoDB is running!' -ForegroundColor Green } catch { Write-Host '  -> No external MongoDB on port 27017.' -ForegroundColor Yellow; Write-Host '  -> Pure Java in-memory MongoDB will auto-initialize inside the JVM (Zero-Dependency mode)!' -ForegroundColor Green }"

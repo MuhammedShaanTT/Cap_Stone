@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { qualityService } from '../../services/qualityService';
+import AiPlanViewer from './AiPlanViewer';
 
 export default function ApkUploader({ projectId, appVersions, onUploadSuccess }) {
   const [file, setFile] = useState(null);
   const [versionTarget, setVersionTarget] = useState('auto'); // 'auto' or specific versionId
   const [customVersionName, setCustomVersionName] = useState('');
+  const [autoGeneratePlan, setAutoGeneratePlan] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [generatingPlan, setGeneratingPlan] = useState(false);
   const [uploadResult, setUploadResult] = useState(null);
+  const [aiPlanResult, setAiPlanResult] = useState(null);
   const [error, setError] = useState(null);
 
   const handleFileChange = (e) => {
@@ -14,12 +18,28 @@ export default function ApkUploader({ projectId, appVersions, onUploadSuccess })
       const selected = e.target.files[0];
       setFile(selected);
       setUploadResult(null);
+      setAiPlanResult(null);
       setError(null);
       // Auto-suggest version name from file name if none selected
       if (!customVersionName) {
         const cleanName = selected.name.replace(/\.apk$/i, '');
         setCustomVersionName(cleanName);
       }
+    }
+  };
+
+  const runAiPlanGeneration = async (versionId) => {
+    if (!projectId || !versionId) return;
+    setGeneratingPlan(true);
+    setError(null);
+    try {
+      const plan = await qualityService.generateAiTestPlan(projectId, versionId);
+      setAiPlanResult(plan);
+    } catch (err) {
+      console.error('AI plan generation error:', err);
+      setError('AI Plan generation failed: ' + (err.message || 'Unknown error'));
+    } finally {
+      setGeneratingPlan(false);
     }
   };
 
@@ -36,6 +56,7 @@ export default function ApkUploader({ projectId, appVersions, onUploadSuccess })
 
     setUploading(true);
     setUploadResult(null);
+    setAiPlanResult(null);
     setError(null);
 
     try {
@@ -69,6 +90,11 @@ export default function ApkUploader({ projectId, appVersions, onUploadSuccess })
       if (onUploadSuccess) {
         onUploadSuccess(res);
       }
+
+      // Automatically generate AI Test Plan and Cases if enabled
+      if (autoGeneratePlan && res.id) {
+        await runAiPlanGeneration(res.id);
+      }
     } catch (err) {
       setError(err.message || 'Failed to upload APK file.');
     } finally {
@@ -79,11 +105,11 @@ export default function ApkUploader({ projectId, appVersions, onUploadSuccess })
   return (
     <div className="console-card">
       <div className="console-card-title">
-        <span>📦 Mobile Binary Artifact Uploader</span>
+        <span>📦 Mobile Binary Artifact Uploader & AI Analyzer</span>
       </div>
       <p style={{ fontSize: '0.82rem', color: '#94a3b8', marginBottom: '1rem' }}>
         Upload Android APK binaries (e.g. <code className="code-inline">test-data/defect-test-app.apk</code>).
-        Files are automatically indexed with SHA-256 integrity hashes and linked to the active project.
+        Files are automatically indexed with SHA-256 integrity hashes, and Gemini 2.5 Flash can synthesize test cases, test strategy plans, and security recommendations immediately.
       </p>
 
       <form onSubmit={handleUpload} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
@@ -169,13 +195,46 @@ export default function ApkUploader({ projectId, appVersions, onUploadSuccess })
           </div>
         </div>
 
+        {/* AI Auto-generate Toggle */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.6rem',
+          background: 'rgba(56, 189, 248, 0.08)',
+          border: '1px solid rgba(56, 189, 248, 0.25)',
+          padding: '0.65rem 0.85rem',
+          borderRadius: '6px'
+        }}>
+          <input
+            type="checkbox"
+            id="auto-plan-checkbox"
+            checked={autoGeneratePlan}
+            onChange={e => setAutoGeneratePlan(e.target.checked)}
+            style={{ cursor: 'pointer', accentColor: '#38bdf8', width: '16px', height: '16px' }}
+          />
+          <label
+            htmlFor="auto-plan-checkbox"
+            style={{
+              fontSize: '0.8rem',
+              color: '#e2e8f0',
+              cursor: 'pointer',
+              fontWeight: 500,
+              userSelect: 'none'
+            }}
+          >
+            🧠 <strong>Auto-generate Test Plan & Cases with Gemini 2.5 Flash</strong> immediately after upload
+          </label>
+        </div>
+
         <button
           type="submit"
-          disabled={!file || uploading}
+          disabled={!file || uploading || generatingPlan}
           className="btn btn-sauce"
           style={{ width: '100%' }}
         >
-          {uploading ? '⚡ Uploading & Computing SHA-256...' : (file ? `Upload "${file.name}" to Project` : 'Choose File to Upload')}
+          {uploading
+            ? '⚡ Uploading & Computing SHA-256...'
+            : (file ? `Upload "${file.name}" to Project` : 'Choose File to Upload')}
         </button>
       </form>
 
@@ -190,9 +249,28 @@ export default function ApkUploader({ projectId, appVersions, onUploadSuccess })
           borderRadius: '8px',
           fontSize: '0.82rem'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, marginBottom: '0.35rem' }}>
-            <span>✅</span>
-            <span>APK Binary Successfully Uploaded & Reflected in Project!</span>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}>
+              <span>✅</span>
+              <span>APK Binary Successfully Uploaded & Reflected in Project!</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => runAiPlanGeneration(uploadResult.versionId)}
+              disabled={generatingPlan}
+              style={{
+                background: '#0284c7',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '0.35rem 0.75rem',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+            >
+              {generatingPlan ? '⏳ Generating...' : '⚡ Generate AI Plan & Cases'}
+            </button>
           </div>
           <div style={{ color: '#fff', fontSize: '0.78rem', lineHeight: 1.5 }}>
             <div><strong>Version:</strong> {uploadResult.version}</div>
@@ -202,6 +280,35 @@ export default function ApkUploader({ projectId, appVersions, onUploadSuccess })
             </div>
           </div>
         </div>
+      )}
+
+      {/* Generating AI Plan Indicator */}
+      {generatingPlan && (
+        <div style={{
+          marginTop: '1rem',
+          background: 'rgba(56, 189, 248, 0.12)',
+          border: '1px solid #38bdf8',
+          padding: '1rem',
+          borderRadius: '8px',
+          textAlign: 'center',
+          color: '#38bdf8',
+          fontSize: '0.85rem',
+          animation: 'pulse 1.5s infinite'
+        }}>
+          <div style={{ fontSize: '1.4rem', marginBottom: '0.35rem' }}>🧠</div>
+          <div style={{ fontWeight: 700 }}>Gemini 2.5 Flash is analyzing your mobile application...</div>
+          <div style={{ fontSize: '0.76rem', color: '#94a3b8', marginTop: '0.25rem' }}>
+            Synthesizing executive test strategy, device compatibility matrix, structured test cases, and architectural recommendations.
+          </div>
+        </div>
+      )}
+
+      {/* Render AI Plan & Test Cases Viewer */}
+      {aiPlanResult && (
+        <AiPlanViewer
+          planData={aiPlanResult}
+          onClose={() => setAiPlanResult(null)}
+        />
       )}
 
       {/* Error Banner */}

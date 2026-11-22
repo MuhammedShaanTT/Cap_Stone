@@ -31,7 +31,7 @@ public class GeminiAiService {
 
     public GeminiAiService(
             @Value("${app.gemini.api-key:}") String apiKey,
-            @Value("${app.gemini.model:gemini-2.0-flash}") String modelId) {
+            @Value("${app.gemini.model:gemini-2.5-flash}") String modelId) {
         this.apiKey = apiKey;
         this.modelId = modelId;
         this.httpClient = HttpClient.newBuilder()
@@ -180,5 +180,138 @@ public class GeminiAiService {
             log.warn("Gemini API call failed (will use fallback): {}", e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Generate structured JSON test plan, test cases, and improvement recommendations for an uploaded app.
+     */
+    public String generateTestPlanAndImprovements(String appName, String packageName, String version,
+                                                  long fileSize, String extraContext) {
+        if (!isAvailable()) {
+            return null;
+        }
+
+        String prompt = String.format("""
+            You are a Principal Mobile QA Automation Engineer & Android Security Specialist.
+            Analyze the following uploaded mobile application:
+            - Application Name: %s
+            - Package Name: %s
+            - Version: %s
+            - File Size Bytes: %d
+            %s
+
+            Generate a comprehensive, production-grade test strategy and structured test suite in valid JSON format.
+            The JSON MUST adhere to this exact structure:
+            {
+              "testPlan": {
+                "title": "Comprehensive Mobile Quality & Test Plan for %s",
+                "executiveSummary": "Detailed test strategy and objective summary",
+                "scope": {
+                  "inScope": ["Scope item 1", "Scope item 2", "Scope item 3"],
+                  "outOfScope": ["Out of scope item 1", "Out of scope item 2"]
+                },
+                "deviceMatrix": [
+                  "Device model, Android version, screen density and testing rationale",
+                  "Second device profile"
+                ],
+                "testingPhases": [
+                  {
+                    "phase": "Phase Name (e.g. Phase 1: Smoke & Sanity)",
+                    "description": "Objectives, tools, and execution methodology"
+                  }
+                ],
+                "exitCriteria": [
+                  "Condition 1 for release approval",
+                  "Condition 2 for release approval"
+                ]
+              },
+              "suggestedTestCases": [
+                {
+                  "name": "Descriptive test case title",
+                  "category": "SMOKE or FUNCTIONAL or SECURITY or PERFORMANCE or UI_UX",
+                  "priority": "CRITICAL or HIGH or MEDIUM",
+                  "preconditions": ["Precondition 1", "Precondition 2"],
+                  "steps": [
+                    {
+                      "order": 1,
+                      "action": "CLICK or TYPE or SWIPE or ASSERT or WAIT",
+                      "target": "target element locator or id",
+                      "value": "input value or parameter if any",
+                      "description": "Readable description of this action"
+                    }
+                  ],
+                  "expectedResults": ["Outcome 1", "Outcome 2"]
+                }
+              ],
+              "applicationImprovements": {
+                "security": ["Actionable security hardening recommendation 1", "recommendation 2"],
+                "performance": ["Performance/battery optimization 1", "optimization 2"],
+                "uiUx": ["Accessibility/UI polish recommendation 1", "recommendation 2"],
+                "architecture": ["Code structure / clean architecture recommendation 1", "recommendation 2"]
+              }
+            }
+
+            Generate at least 5 realistic, high-value test cases covering core functionality, security, UI boundaries, and edge cases.
+            Provide at least 3 actionable recommendations per improvement category.
+            Return ONLY raw valid JSON matching this schema, no markdown code fence.
+            """, appName, packageName, version, fileSize,
+                (extraContext != null && !extraContext.isBlank() ? "- Extra Context: " + extraContext : ""),
+                appName);
+
+        return callGeminiJson(prompt);
+    }
+
+    private String callGeminiJson(String prompt) {
+        try {
+            String url = String.format(
+                    "https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent?key=%s",
+                    modelId, apiKey);
+
+            Map<String, Object> requestBody = Map.of(
+                    "contents", List.of(
+                            Map.of("parts", List.of(Map.of("text", prompt)))
+                    ),
+                    "generationConfig", Map.of(
+                            "temperature", 0.2,
+                            "maxOutputTokens", 8192,
+                            "responseMimeType", "application/json"
+                    )
+            );
+
+            String jsonBody = objectMapper.writeValueAsString(requestBody);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .timeout(Duration.ofSeconds(45))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                JsonNode root = objectMapper.readTree(response.body());
+                JsonNode candidates = root.path("candidates");
+                if (candidates.isArray() && !candidates.isEmpty()) {
+                    JsonNode content = candidates.get(0).path("content").path("parts");
+                    if (content.isArray() && !content.isEmpty()) {
+                        String text = content.get(0).path("text").asText("");
+                        log.info("Gemini AI JSON generated successfully ({} chars)", text.length());
+                        return text.trim();
+                    }
+                }
+                log.warn("Gemini API returned 200 but no usable text in response");
+            } else {
+                log.warn("Gemini API returned status {}: {}", response.statusCode(),
+                        response.body().substring(0, Math.min(200, response.body().length())));
+            }
+        } catch (Exception e) {
+            log.warn("Gemini JSON call failed: {}", e.getMessage());
+        }
+        return null;
+    }
+
+    public String getModelId() {
+        return modelId;
     }
 }
