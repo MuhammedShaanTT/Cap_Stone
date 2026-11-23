@@ -1,0 +1,16 @@
+server:
+  port: ${SERVER_PORT:8082}
+
+spring:
+  application:
+    name: mobile-ai-quality-platform-copilot
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27018/maqp_copilot}
+      database: ${MONGODB_DATABASE:maqp_copilot}
+
+app:
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174,http://localhost:3000,http://127.0.0.1:3000}
+  artifacts:
+    base-path: ${ARTIFACT_STORAGE_PATH:./data/copilot-artifacts}

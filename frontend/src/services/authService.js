@@ -8,10 +8,9 @@ export const authService = {
     });
     if (data.accessToken) {
       setAuthToken(data.accessToken);
-      localStorage.setItem('aura_user', JSON.stringify({
-        email,
-        role: email.includes('admin') ? 'ADMIN' : 'DEVELOPER'
-      }));
+      localStorage.setItem('aura_user', JSON.stringify(
+        data.user || { email, role: 'DEVELOPER' }
+      ));
     }
     return data;
   },
