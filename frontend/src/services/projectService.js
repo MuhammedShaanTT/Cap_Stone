@@ -51,5 +51,27 @@ export const projectService = {
       method: 'POST',
       body: scanData
     });
+  },
+
+  async getPipelineRuns(projectId) {
+    return await request(`/projects/${projectId}/pipeline-runs`, { method: 'GET' });
+  },
+
+  async createPipelineRun(projectId, branch = 'main', commitSha = 'HEAD') {
+    return await request(`/projects/${projectId}/pipeline-runs`, {
+      method: 'POST',
+      body: { branch, commitSha }
+    });
+  },
+
+  async getTestRuns(testCaseId) {
+    return await request(`/test-cases/${testCaseId}/test-runs`, { method: 'GET' });
+  },
+
+  async createTestRun(testCaseId, runData = {}) {
+    return await request(`/test-cases/${testCaseId}/test-runs`, {
+      method: 'POST',
+      body: runData
+    });
   }
 };

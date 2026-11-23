@@ -9,6 +9,7 @@ import ProjectListPage from './pages/ProjectListPage';
 import ProjectDashboardPage from './pages/ProjectDashboardPage';
 import AppVersionsPage from './pages/AppVersionsPage';
 import TestCasesPage from './pages/TestCasesPage';
+import TestRunsPage from './pages/TestRunsPage';
 import SecurityScansPage from './pages/SecurityScansPage';
 import FindingsPage from './pages/FindingsPage';
 import HealingPage from './pages/HealingPage';
@@ -66,6 +67,7 @@ export default function App() {
         <Route path="projects/:projectId/dashboard" element={<ProjectDashboardPage />} />
         <Route path="projects/:projectId/versions" element={<AppVersionsPage />} />
         <Route path="projects/:projectId/test-cases" element={<TestCasesPage />} />
+        <Route path="projects/:projectId/test-runs" element={<TestRunsPage />} />
         <Route path="projects/:projectId/scans" element={<SecurityScansPage />} />
         <Route path="projects/:projectId/findings" element={<FindingsPage />} />
         <Route path="projects/:projectId/healing" element={<HealingPage />} />

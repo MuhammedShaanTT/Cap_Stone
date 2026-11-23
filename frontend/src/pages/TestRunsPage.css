@@ -1,0 +1,59 @@
+/* ==========================================================================
+   METADEFENDER TEST RUNS & PIPELINES PAGE STYLES
+   ========================================================================== */
+.meta-testruns-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.meta-runs-card {
+  background: var(--meta-bg-card);
+  border: 1px solid var(--meta-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+
+.meta-runs-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.meta-runs-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-run-id {
+  color: var(--meta-blue-light);
+  font-size: 0.76rem;
+}
+
+.meta-run-branch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.meta-commit-sha {
+  color: var(--meta-cyan);
+  background: #020612;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.72rem;
+}
+
+.meta-run-summary {
+  font-size: 0.78rem;
+  color: var(--meta-text-secondary);
+}

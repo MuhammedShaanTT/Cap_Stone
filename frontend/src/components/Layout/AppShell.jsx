@@ -50,7 +50,6 @@ export default function AppShell() {
     const selected = projects.find((p) => p.id === targetId);
     if (selected) {
       setActiveProject(selected);
-      // Keep current sub-path if possible
       const parts = location.pathname.split('/');
       const currentTab = parts[4] || 'dashboard';
       navigate(`/app/projects/${selected.id}/${currentTab}`);
@@ -74,6 +73,7 @@ export default function AppShell() {
       case 'dashboard': return 'Threat & Quality Dashboard';
       case 'versions': return 'Binary Dropzone & Artifacts';
       case 'test-cases': return 'AI Test Suites';
+      case 'test-runs': return 'CI/CD Pipeline Runs';
       case 'scans': return 'Vulnerability Scans';
       case 'findings': return 'Security Findings';
       case 'healing': return 'Self-Healing Engine';
@@ -137,6 +137,15 @@ export default function AppShell() {
           >
             <span className="meta-nav-icon">🧪</span>
             <span>AI Test Cases (Gemini)</span>
+          </NavLink>
+
+          <NavLink
+            to={currentProjectId ? `/app/projects/${currentProjectId}/test-runs` : '/app/projects'}
+            className={({ isActive }) => `meta-nav-item ${isActive ? 'active' : ''}`}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <span className="meta-nav-icon">🔄</span>
+            <span>Pipeline Runs</span>
           </NavLink>
 
           <NavLink
