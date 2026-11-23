@@ -1,131 +1,120 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './Navbar.css';
 
-export default function Navbar({ onOpenConsole }) {
+export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
-    <header className="site-header">
-      <div className="container nav-container">
+    <header className="meta-site-header">
+      <div className="container meta-nav-container">
         {/* Brand Logo */}
-        <a href="#" className="brand-logo">
-          <div className="brand-icon">
-            <span>▲</span>
+        <Link to="/" className="meta-brand-logo">
+          <div className="meta-brand-icon">
+            <span>🛡️</span>
           </div>
-          <span>AURA<span className="brand-accent">.</span>QA</span>
-        </a>
+          <div>
+            <span className="meta-brand-title">AURA<span className="accent">.</span>QA</span>
+            <span className="meta-brand-tag">METADEFENDER QUALITY</span>
+          </div>
+        </Link>
 
         {/* Desktop Navigation Links */}
-        <nav>
-          <ul className="nav-menu">
-            {/* Products Dropdown */}
-            <li className="nav-item">
-              <a className="nav-link" href="#features">
-                Products <span className="caret">▼</span>
-              </a>
-              <div className="mega-menu">
-                <div className="mega-grid">
-                  <a href="#features" className="mega-item">
-                    <div className="mega-item-icon">⚡</div>
-                    <div>
-                      <div className="mega-item-title">Autonomous AI Engine</div>
-                      <div className="mega-item-desc">Self-healing test cases & auto-generated mobile suites.</div>
-                    </div>
-                  </a>
-                  <a href="#features" className="mega-item">
-                    <div className="mega-item-icon">🛡️</div>
-                    <div>
-                      <div className="mega-item-title">Continuous Mobile AppSec</div>
-                      <div className="mega-item-desc">Automated SAST & CWE vulnerability detection in CI.</div>
-                    </div>
-                  </a>
-                  <a href="#architecture" className="mega-item">
-                    <div className="mega-item-icon">📱</div>
-                    <div>
-                      <div className="mega-item-title">Real-Device Cloud</div>
-                      <div className="mega-item-desc">Thousands of physical iOS & Android test matrices.</div>
-                    </div>
-                  </a>
-                  <a href="#integrations" className="mega-item">
-                    <div className="mega-item-icon">🔄</div>
-                    <div>
-                      <div className="mega-item-title">CI/CD Gateways</div>
-                      <div className="mega-item-desc">Native pipelines for GitHub Actions, GitLab & Jenkins.</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </li>
-
-            {/* Solutions Dropdown */}
-            <li className="nav-item">
-              <a className="nav-link" href="#architecture">
-                Solutions <span className="caret">▼</span>
-              </a>
-              <div className="mega-menu" style={{ minWidth: '400px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  <a href="#architecture" className="mega-item">
-                    <div className="mega-item-icon">🏦</div>
-                    <div>
-                      <div className="mega-item-title">Enterprise FinTech</div>
-                      <div className="mega-item-desc">Bank-grade OWASP MASVS security compliance.</div>
-                    </div>
-                  </a>
-                  <a href="#architecture" className="mega-item">
-                    <div className="mega-item-icon">🛍️</div>
-                    <div>
-                      <div className="mega-item-title">High-Velocity Retail & E-Commerce</div>
-                      <div className="mega-item-desc">Zero flakiness during critical release windows.</div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </li>
-
-            {/* Platform Dropdown */}
-            <li className="nav-item">
-              <a className="nav-link" href="#architecture">Platform</a>
-            </li>
-
-            {/* Integrations */}
-            <li className="nav-item">
-              <a className="nav-link" href="#integrations">Integrations</a>
-            </li>
-
-            {/* Resources / Docs */}
-            <li className="nav-item">
-              <a className="nav-link" href="/swagger-ui.html" target="_blank" rel="noopener noreferrer">
-                Swagger API ↗
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        {/* Action Buttons */}
-        <div className="nav-actions">
-          <button onClick={() => onOpenConsole('login')} className="nav-login">
-            Sign In
-          </button>
+        <nav className="meta-nav-menu">
+          <a href="#features" className="meta-nav-link">Capabilities</a>
+          <a href="#architecture" className="meta-nav-link">Architecture</a>
+          <a href="#integrations" className="meta-nav-link">Ecosystem</a>
           <a
             href="/swagger-ui.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline btn-sm"
+            className="meta-nav-link"
           >
-            API Docs
+            OpenAPI Docs ↗
           </a>
-          <button onClick={() => onOpenConsole('dashboard')} className="btn btn-sauce btn-sm">
-            ⚡ Launch Live Platform
-          </button>
+        </nav>
+
+        {/* Action Buttons */}
+        <div className="meta-nav-actions">
+          {isAuthenticated ? (
+            <>
+              <button
+                onClick={() => navigate('/app/projects')}
+                className="btn btn-primary btn-sm"
+              >
+                ⚡ Open Console
+              </button>
+              <button
+                onClick={logout}
+                className="btn btn-outline btn-sm"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-outline btn-sm">
+                Sign In
+              </Link>
+              <Link to="/app/projects" className="btn btn-primary btn-sm">
+                ⚡ Launch Live Platform
+              </Link>
+            </>
+          )}
+
           <button
-            className="mobile-toggle"
+            className="meta-mobile-toggle"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle Navigation"
+            aria-label="Toggle navigation"
+            aria-expanded={mobileOpen}
           >
-            ☰
+            {mobileOpen ? '✕' : '☰'}
           </button>
         </div>
       </div>
+
+      {/* Mobile Drawer Menu */}
+      {mobileOpen && (
+        <div className="meta-mobile-nav-menu">
+          <a href="#features" onClick={() => setMobileOpen(false)} className="meta-mobile-link">
+            Capabilities
+          </a>
+          <a href="#architecture" onClick={() => setMobileOpen(false)} className="meta-mobile-link">
+            Architecture
+          </a>
+          <a href="#integrations" onClick={() => setMobileOpen(false)} className="meta-mobile-link">
+            Ecosystem
+          </a>
+          <a
+            href="/swagger-ui.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="meta-mobile-link"
+          >
+            OpenAPI Swagger ↗
+          </a>
+          <div className="meta-mobile-nav-divider" />
+          <Link
+            to="/login"
+            onClick={() => setMobileOpen(false)}
+            className="btn btn-outline"
+            style={{ width: '100%', textAlign: 'center' }}
+          >
+            Sign In to Console
+          </Link>
+          <Link
+            to="/app/projects"
+            onClick={() => setMobileOpen(false)}
+            className="btn btn-primary"
+            style={{ width: '100%', textAlign: 'center' }}
+          >
+            ⚡ Launch Live Platform
+          </Link>
+        </div>
+      )}
     </header>
   );
 }

@@ -29,5 +29,27 @@ export const projectService = {
       method: 'POST',
       body: { version, platform, packageName }
     });
+  },
+
+  async getTestCases(projectId) {
+    return await request(`/projects/${projectId}/test-cases`, { method: 'GET' });
+  },
+
+  async createTestCase(projectId, testCaseData) {
+    return await request(`/projects/${projectId}/test-cases`, {
+      method: 'POST',
+      body: testCaseData
+    });
+  },
+
+  async getSecurityScans(projectId) {
+    return await request(`/projects/${projectId}/security-scans`, { method: 'GET' });
+  },
+
+  async createSecurityScan(projectId, scanData = {}) {
+    return await request(`/projects/${projectId}/security-scans`, {
+      method: 'POST',
+      body: scanData
+    });
   }
 };

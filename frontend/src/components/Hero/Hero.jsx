@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Hero.css';
 
-export default function Hero({ onOpenConsole }) {
-  const [activeTab, setActiveTab] = useState('grid'); // 'grid', 'heal', 'sec', 'pipeline'
+export default function Hero() {
+  const [activeTab, setActiveTab] = useState('grid');
+  const navigate = useNavigate();
 
   return (
     <section className="hero-section">
@@ -12,52 +14,51 @@ export default function Hero({ onOpenConsole }) {
           <div>
             <div className="pill-badge">
               <span className="pulse-dot"></span>
-              New: Autonomous Self-Healing Engine v3.4 Launched
+              MetaDefender Mobile Quality Platform (MVP Prototype)
             </div>
           </div>
 
           <h1 className="display-1 hero-headline">
-            Autonomous Mobile Testing & AI AppSec at <span className="highlight">Enterprise Scale</span>.
+            AI-Driven Autonomous Mobile Quality & <span className="highlight">AppSec Intelligence</span>.
           </h1>
 
           <p className="subheading">
-            Eliminate flaky tests, prevent zero-day mobile vulnerabilities, and ship 4.2x faster.
-            Aura Quality Cloud autonomously analyzes APK/IPA builds, generates test suites, and
-            heals broken locators in real time.
+            Zero-trust mobile vulnerability scanning, automated Appium test synthesis with Google Gemini 2.5 Flash,
+            and self-healing locators that repair broken selectors in CI/CD.
           </p>
 
           <div className="hero-ctas">
-            <button onClick={() => onOpenConsole('dashboard')} className="btn btn-sauce">
-              Start Free Enterprise Trial &rarr;
-            </button>
-            <button onClick={() => onOpenConsole('defect-test')} className="btn btn-outline">
-              🔍 Run Automated Defect Scan
-            </button>
+            <Link to="/app/projects" className="btn btn-primary btn-lg">
+              ⚡ Launch Live Platform &rarr;
+            </Link>
+            <Link to="/login" className="btn btn-secondary btn-lg">
+              🔑 Sign In to Console
+            </Link>
           </div>
 
           <div className="hero-trust-row">
             <div className="hero-trust-item">
-              <span style={{ color: 'var(--emerald-accent)' }}>✓</span> SOC 2 Type II
+              <span style={{ color: 'var(--verdict-clean)' }}>✓</span> Spring Boot 3.4
             </div>
             <div className="hero-trust-item">
-              <span style={{ color: 'var(--emerald-accent)' }}>✓</span> OWASP MASVS Audited
+              <span style={{ color: 'var(--verdict-clean)' }}>✓</span> Google Gemini 2.5 Flash
             </div>
             <div className="hero-trust-item">
-              <span style={{ color: 'var(--emerald-accent)' }}>✓</span> 99.98% SLA
+              <span style={{ color: 'var(--verdict-clean)' }}>✓</span> OWASP CWE Scanners
             </div>
             <div className="hero-trust-item">
-              <span style={{ color: 'var(--emerald-accent)' }}>✓</span> Pure In-Memory DB
+              <span style={{ color: 'var(--verdict-clean)' }}>✓</span> In-Memory MongoDB
             </div>
           </div>
         </div>
 
-        {/* Right Column: Realistic Product Dashboard Mockup */}
+        {/* Right Column: MetaDefender-Inspired Interactive Scanner Preview */}
         <div className="preview-shell">
           <div className="preview-topbar">
             <div className="preview-dots">
-              <div className="preview-dot" style={{ background: '#ef4444' }}></div>
-              <div className="preview-dot" style={{ background: '#f59e0b' }}></div>
-              <div className="preview-dot" style={{ background: '#10b981' }}></div>
+              <div className="preview-dot" style={{ background: '#ff3366' }}></div>
+              <div className="preview-dot" style={{ background: '#ffaa00' }}></div>
+              <div className="preview-dot" style={{ background: '#00e676' }}></div>
             </div>
 
             <div className="preview-tab-row">
@@ -65,7 +66,7 @@ export default function Hero({ onOpenConsole }) {
                 className={`preview-tab-btn ${activeTab === 'grid' ? 'active' : ''}`}
                 onClick={() => setActiveTab('grid')}
               >
-                ● Live Grid
+                ● Multiscan
               </button>
               <button
                 className={`preview-tab-btn ${activeTab === 'heal' ? 'active' : ''}`}
@@ -83,7 +84,7 @@ export default function Hero({ onOpenConsole }) {
                 className={`preview-tab-btn ${activeTab === 'pipeline' ? 'active' : ''}`}
                 onClick={() => setActiveTab('pipeline')}
               >
-                🔄 Telemetry
+                🔄 Release Gate
               </button>
             </div>
           </div>
@@ -93,53 +94,47 @@ export default function Hero({ onOpenConsole }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                    Active Suite: <strong style={{ color: '#fff' }}>smoke-regression-v2.0</strong>
+                    Analyzed Binary: <strong style={{ color: '#fff' }}>defect-test-app.apk</strong>
                   </span>
-                  <span style={{
-                    fontSize: '0.72rem',
-                    background: 'rgba(16, 185, 129, 0.2)',
-                    color: '#34d399',
-                    padding: '2px 8px',
-                    borderRadius: '12px'
-                  }}>
-                    ● 14 Parallel Devices Active
+                  <span className="pill pill-clean">
+                    ● Prototype Multi-Scan Ready
                   </span>
                 </div>
 
                 <div style={{
-                  background: '#0a0f1d',
+                  background: '#070d18',
                   borderRadius: '8px',
                   padding: '0.85rem',
-                  border: '1px solid #1e293b',
+                  border: '1px solid #1b2a4a',
                   fontSize: '0.78rem',
                   fontFamily: 'var(--font-mono)'
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                    <span style={{ color: '#60a5fa' }}>Google Pixel 8 Pro [Android 14]</span>
-                    <span style={{ color: '#34d399' }}>PASSED (1.8s)</span>
+                    <span style={{ color: '#38bdf8' }}>Google Pixel 8 Emulator [Android 14]</span>
+                    <span style={{ color: 'var(--verdict-clean)' }}>PASSED (1.8s)</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-                    <span style={{ color: '#60a5fa' }}>Samsung Galaxy S24 Ultra [OneUI 6]</span>
-                    <span style={{ color: '#34d399' }}>PASSED (2.1s)</span>
+                    <span style={{ color: '#38bdf8' }}>Samsung Galaxy S24 [Android 14]</span>
+                    <span style={{ color: 'var(--verdict-clean)' }}>PASSED (2.1s)</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#60a5fa' }}>Apple iPhone 15 Pro Max [iOS 17.4]</span>
-                    <span style={{ color: '#fbbf24' }}>HEALING IN PROGRESS...</span>
+                    <span style={{ color: '#38bdf8' }}>AI Locator Repair Intercept</span>
+                    <span style={{ color: 'var(--verdict-warning)' }}>REPAIRED (95% CONFIDENCE)</span>
                   </div>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.6rem' }}>
-                  <div style={{ background: '#1e293b', padding: '0.6rem', borderRadius: '6px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Pass Rate</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#34d399' }}>98.4%</div>
+                  <div style={{ background: '#111b30', padding: '0.6rem', borderRadius: '6px', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.68rem', color: '#889bb8' }}>Verdict</div>
+                    <div style={{ fontSize: '1rem', fontWeight: 800, color: '#ff3366' }}>HOLD</div>
                   </div>
-                  <div style={{ background: '#1e293b', padding: '0.6rem', borderRadius: '6px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Avg Latency</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#60a5fa' }}>1.9s</div>
+                  <div style={{ background: '#111b30', padding: '0.6rem', borderRadius: '6px', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.68rem', color: '#889bb8' }}>Risk Score</div>
+                    <div style={{ fontSize: '1rem', fontWeight: 800, color: '#ffaa00' }}>85%</div>
                   </div>
-                  <div style={{ background: '#1e293b', padding: '0.6rem', borderRadius: '6px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Auto-Healed</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: '#eb144c' }}>12 Suites</div>
+                  <div style={{ background: '#111b30', padding: '0.6rem', borderRadius: '6px', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.68rem', color: '#889bb8' }}>Gemini Model</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#00d2ff' }}>2.5 Flash</div>
                   </div>
                 </div>
               </div>
@@ -147,22 +142,22 @@ export default function Hero({ onOpenConsole }) {
 
             {activeTab === 'heal' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ fontSize: '0.8rem', color: '#fbbf24', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div style={{ fontSize: '0.8rem', color: '#ffaa00', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                   <span>⚠️</span> Broken Locator Detected: <code style={{ color: '#fff' }}>By.id("btn_login_submit")</code>
                 </div>
                 <div style={{
-                  background: '#0a0f1d',
+                  background: '#070d18',
                   borderRadius: '6px',
                   padding: '0.75rem',
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.75rem',
-                  border: '1px solid #1e293b'
+                  border: '1px solid #1b2a4a'
                 }}>
-                  <div style={{ color: '#ef4444' }}>- By.id("btn_login_submit")</div>
-                  <div style={{ color: '#10b981' }}>+ By.id("btn_submit_login_v2") // AI Confidence: 95%</div>
+                  <div style={{ color: '#ff3366' }}>- driver.findElement(By.id("btn_login_submit")).click();</div>
+                  <div style={{ color: '#00e676' }}>+ driver.findElement(By.id("btn_submit_login_v2")).click(); // AI Confidence: 95%</div>
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>
-                  Hypothesis: App redesign renamed submit button id. Automated PR patch generated.
+                <div style={{ fontSize: '0.75rem', color: '#889bb8' }}>
+                  Hypothesis: UI developer renamed submit button ID. Automated Git PR patch diff generated.
                 </div>
               </div>
             )}
@@ -170,13 +165,13 @@ export default function Hero({ onOpenConsole }) {
             {activeTab === 'sec' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#f87171' }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#ff3366' }}>
                     ● 5 Automated SAST Vulnerabilities Found
                   </span>
-                  <span style={{ fontSize: '0.7rem', color: '#94a3b8' }}>Target: defect-test-app.apk</span>
+                  <span style={{ fontSize: '0.7rem', color: '#889bb8' }}>Target: defect-test-app.apk</span>
                 </div>
                 <div style={{
-                  background: '#0a0f1d',
+                  background: '#070d18',
                   borderRadius: '6px',
                   padding: '0.7rem',
                   fontSize: '0.72rem',
@@ -185,28 +180,28 @@ export default function Hero({ onOpenConsole }) {
                   flexDirection: 'column',
                   gap: '0.35rem'
                 }}>
-                  <div style={{ color: '#ef4444' }}>[CRITICAL] CWE-798: Hardcoded Google API Key in Bytecode</div>
+                  <div style={{ color: '#ff3366' }}>[CRITICAL] CWE-798: Hardcoded Google API Secret in Bytecode</div>
                   <div style={{ color: '#f97316' }}>[HIGH] CWE-319: Cleartext HTTP Traffic Permitted</div>
                   <div style={{ color: '#f97316' }}>[HIGH] CWE-489: android:debuggable="true" in Release</div>
-                  <div style={{ color: '#fbbf24' }}>[MEDIUM] CWE-328: Weak Cryptographic MD5 Hash Used</div>
-                  <div style={{ color: '#fbbf24' }}>[MEDIUM] CWE-926: Exported Activity Missing Permission</div>
+                  <div style={{ color: '#ffaa00' }}>[MEDIUM] CWE-328: Weak Cryptographic MD5 Hash Used</div>
+                  <div style={{ color: '#ffaa00' }}>[MEDIUM] CWE-926: Exported Activity Missing Permission</div>
                 </div>
               </div>
             )}
 
             {activeTab === 'pipeline' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>
-                  CI/CD Run <strong style={{ color: '#fff' }}>#PR-14892</strong> on branch <code style={{ color: '#60a5fa' }}>main</code>
+                <div style={{ fontSize: '0.8rem', color: '#889bb8' }}>
+                  CI/CD Build Quality Gate on branch <code style={{ color: '#00d2ff' }}>feature/frontend-overhaul</code>
                 </div>
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  <div style={{ flex: 1, height: '6px', background: '#10b981', borderRadius: '3px' }}></div>
-                  <div style={{ flex: 1, height: '6px', background: '#10b981', borderRadius: '3px' }}></div>
-                  <div style={{ flex: 1, height: '6px', background: '#10b981', borderRadius: '3px' }}></div>
-                  <div style={{ flex: 1, height: '6px', background: '#eb144c', borderRadius: '3px' }}></div>
+                  <div style={{ flex: 1, height: '6px', background: '#00e676', borderRadius: '3px' }}></div>
+                  <div style={{ flex: 1, height: '6px', background: '#00e676', borderRadius: '3px' }}></div>
+                  <div style={{ flex: 1, height: '6px', background: '#00e676', borderRadius: '3px' }}></div>
+                  <div style={{ flex: 1, height: '6px', background: '#ff3366', borderRadius: '3px' }}></div>
                 </div>
                 <div style={{ fontSize: '0.75rem', color: '#cbd5e1' }}>
-                  Quality Gate: <strong>HOLD</strong> (High Risk SAST Vulnerability CWE-798 requires patch before release).
+                  Quality Gate: <strong>HOLD</strong> (Critical SAST CWE-798 must be patched before production deployment).
                 </div>
               </div>
             )}

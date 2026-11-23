@@ -6,45 +6,45 @@ export default function TrustBar() {
     <section className="trust-section">
       <div className="container">
         <div className="trust-heading">
-          Trusted by Engineering Leaders at High-Velocity Mobile Companies
+          Built With Modern Enterprise & Cybersecurity Technologies
         </div>
 
-        {/* Enterprise Client Logos Placeholder */}
+        {/* Real Technology Badges */}
         <div className="trust-logos">
           <div className="trust-logo-item">
-            <span>◈</span> GLOBAL FINTECH
+            <span>☕</span> SPRING BOOT 3.4
           </div>
           <div className="trust-logo-item">
-            <span>◼</span> FORTUNE 500 MEDIA
+            <span>⚛️</span> REACT 19 + VITE
           </div>
           <div className="trust-logo-item">
-            <span>●</span> HEALTHCARE AI
+            <span>🍃</span> MONGODB
           </div>
           <div className="trust-logo-item">
-            <span>◆</span> RETAIL SUPERAPP
+            <span>🧠</span> GEMINI 2.5 FLASH
           </div>
           <div className="trust-logo-item">
-            <span>▲</span> AUTONOMOUS MOBILITY
+            <span>🛡️</span> OWASP MASVS
           </div>
         </div>
 
-        {/* Quantified Performance Stats */}
+        {/* Quantified Platform Stats */}
         <div className="trust-stats-grid">
           <div className="trust-stat-card">
-            <div className="trust-stat-number">5.2M<span>+</span></div>
-            <div className="trust-stat-label">Mobile Tests Run Daily</div>
+            <div className="trust-stat-number">20<span>+</span></div>
+            <div className="trust-stat-label">REST API Micro-Endpoints</div>
           </div>
           <div className="trust-stat-card">
-            <div className="trust-stat-number">99.98<span>%</span></div>
-            <div className="trust-stat-label">Real Device Cloud Uptime</div>
+            <div className="trust-stat-number">100<span>%</span></div>
+            <div className="trust-stat-label">SHA-256 Binary Integrity Verification</div>
           </div>
           <div className="trust-stat-card">
-            <div className="trust-stat-number">84<span>%</span></div>
-            <div className="trust-stat-label">Reduction in Flaky Failures</div>
+            <div className="trust-stat-number">95<span>%</span></div>
+            <div className="trust-stat-label">AI Locator Repair Confidence</div>
           </div>
           <div className="trust-stat-card">
-            <div className="trust-stat-number">4.2<span>x</span></div>
-            <div className="trust-stat-label">Faster Release Cycle Velocity</div>
+            <div className="trust-stat-number">5<span>-Phase</span></div>
+            <div className="trust-stat-label">Continuous Quality Delivery Pipeline</div>
           </div>
         </div>
       </div>

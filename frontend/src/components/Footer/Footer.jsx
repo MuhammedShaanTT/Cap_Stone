@@ -1,84 +1,96 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.css';
 
-export default function Footer({ onOpenConsole }) {
+export default function Footer() {
+  const [apiStatus, setApiStatus] = useState('Checking...');
+
+  useEffect(() => {
+    fetch('/actuator/health')
+      .then((res) => {
+        if (res.ok) setApiStatus('Operational (UP - Port 8080)');
+        else setApiStatus('Backend Unavailable');
+      })
+      .catch(() => setApiStatus('MVP Offline (Localhost:8080)'));
+  }, []);
+
   return (
     <footer className="site-footer">
       <div className="container">
         <div className="footer-grid">
           {/* Brand Info */}
           <div className="footer-brand">
-            <a href="#" className="brand-logo" style={{ color: '#fff' }}>
-              <div className="brand-icon">▲</div>
+            <Link to="/" className="brand-logo" style={{ color: '#fff' }}>
+              <div className="brand-icon">🛡️</div>
               <span>AURA<span className="brand-accent">.</span>QA</span>
-            </a>
+            </Link>
             <p>
-              Autonomous enterprise mobile quality engineering platform inspired by Sauce Labs.
-              AI test generation, continuous AppSec SAST auditing, and self-healing pipelines.
+              AI-Driven Autonomous Mobile Application Testing, Vulnerability Assessment,
+              and Self-Healing CI/CD Platform inspired by MetaDefender & Sauce Labs.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-              <span style={{ fontSize: '0.8rem', background: '#1e293b', padding: '4px 8px', borderRadius: '4px', color: '#10b981' }}>
-                ● API Status: Operational (UP)
+              <span style={{
+                fontSize: '0.78rem',
+                background: '#111b30',
+                padding: '4px 10px',
+                borderRadius: '4px',
+                color: apiStatus.includes('UP') ? '#00e676' : '#ffaa00',
+                border: '1px solid #1b2a4a'
+              }}>
+                ● Core Engine: {apiStatus}
               </span>
             </div>
           </div>
 
-          {/* Products */}
+          {/* Platform Console */}
           <div className="footer-col">
-            <h4>Products</h4>
+            <h4>Console Navigation</h4>
             <ul>
-              <li><a href="#features">Autonomous AI Engine</a></li>
-              <li><a href="#features">Mobile AppSec (CWE)</a></li>
-              <li><a href="#architecture">Real-Device Cloud</a></li>
-              <li><a href="#architecture">Self-Healing Locators</a></li>
-              <li><a href="#integrations">CI/CD Gateways</a></li>
-            </ul>
-          </div>
-
-          {/* Solutions */}
-          <div className="footer-col">
-            <h4>Solutions</h4>
-            <ul>
-              <li><a href="#architecture">FinTech & Banking</a></li>
-              <li><a href="#architecture">E-Commerce & Retail</a></li>
-              <li><a href="#architecture">Healthcare (HIPAA)</a></li>
-              <li><a href="#architecture">Telecom & Media</a></li>
-            </ul>
-          </div>
-
-          {/* Developers & Docs */}
-          <div className="footer-col">
-            <h4>Developers</h4>
-            <ul>
+              <li><Link to="/app/projects">Central Projects Directory</Link></li>
+              <li><Link to="/login">Sign In / Demo Login</Link></li>
               <li><a href="/swagger-ui.html" target="_blank" rel="noopener noreferrer">Swagger OpenAPI</a></li>
-              <li><a href="/actuator/health" target="_blank" rel="noopener noreferrer">Actuator Health</a></li>
-              <li><a href="javascript:void(0)" onClick={() => onOpenConsole('dashboard')}>Live Web Console</a></li>
-              <li><a href="javascript:void(0)" onClick={() => onOpenConsole('defect-test')}>Automated Defect Test</a></li>
+              <li><a href="/actuator/health" target="_blank" rel="noopener noreferrer">Actuator Health Status</a></li>
             </ul>
           </div>
 
-          {/* Compliance & Trust */}
+          {/* Capabilities */}
           <div className="footer-col">
-            <h4>Compliance</h4>
+            <h4>Capabilities</h4>
             <ul>
-              <li><a href="#">SOC 2 Type II</a></li>
-              <li><a href="#">ISO 27001 Certified</a></li>
-              <li><a href="#">OWASP MASVS</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#features">Autonomous AI Test Synthesis</a></li>
+              <li><a href="#features">Mobile AppSec (OWASP CWE)</a></li>
+              <li><a href="#architecture">AI Self-Healing Locators</a></li>
+              <li><a href="#integrations">CI/CD Release Gates</a></li>
+            </ul>
+          </div>
+
+          {/* Reference & Repo */}
+          <div className="footer-col">
+            <h4>Project Artifacts</h4>
+            <ul>
+              <li>
+                <a
+                  href="https://github.com/MuhammedShaanTT/Cap_Stone"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub Repository ↗
+                </a>
+              </li>
+              <li><a href="https://metadefender.com" target="_blank" rel="noopener noreferrer">MetaDefender Inspiration ↗</a></li>
+              <li><a href="https://mas.owasp.org/" target="_blank" rel="noopener noreferrer">OWASP MASVS Framework ↗</a></li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
           <div>
-            &copy; {new Date().getFullYear()} Aura Quality Cloud Inc. All rights reserved. Inspired by Sauce Labs design standards.
+            &copy; {new Date().getFullYear()} Aura Quality Cloud &bull; B.Tech Computer Science & Engineering Capstone Project.
           </div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
-            <a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Security</a>
-            <a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Privacy</a>
-            <a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Status</a>
-            <a href="#" style={{ color: '#64748b', textDecoration: 'none' }}>Contact Sales</a>
+            <Link to="/app/projects" style={{ color: '#889bb8', textDecoration: 'none' }}>Live Console</Link>
+            <Link to="/login" style={{ color: '#889bb8', textDecoration: 'none' }}>Sign In</Link>
+            <a href="https://github.com/MuhammedShaanTT/Cap_Stone" target="_blank" rel="noopener noreferrer" style={{ color: '#889bb8', textDecoration: 'none' }}>GitHub</a>
           </div>
         </div>
       </div>

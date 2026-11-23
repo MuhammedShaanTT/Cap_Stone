@@ -1,67 +1,72 @@
 /* ==========================================================================
-   SAUCE LABS DESIGN TOKENS & VARIABLES
+   METADEFENDER CYBERSECURITY DESIGN SYSTEM TOKENS
+   Inspired by OPSWAT MetaDefender Enterprise & Zero-Trust Cloud Architecture
    ========================================================================== */
 :root {
-  /* Brand Accents */
-  --sauce-red: #eb144c;
-  --sauce-red-hover: #d10d40;
-  --sauce-red-subtle: rgba(235, 20, 76, 0.08);
-  --sauce-red-glow: rgba(235, 20, 76, 0.25);
-  
-  /* Dark / Enterprise Surfaces */
-  --brand-navy: #0b132b;
-  --brand-slate: #1c2541;
-  --brand-dark: #0f172a;
-  
-  /* Status & Functional Accents */
-  --blue-accent: #2563eb;
-  --blue-subtle: rgba(37, 99, 235, 0.08);
-  --cyan-accent: #06b6d4;
-  --emerald-accent: #10b981;
-  --emerald-subtle: rgba(16, 185, 129, 0.1);
-  --amber-accent: #f59e0b;
-  --amber-subtle: rgba(245, 158, 11, 0.1);
-  --purple-accent: #8b5cf6;
-  
-  /* Neutral Palette */
-  --bg-white: #ffffff;
-  --bg-light: #f8fafc;
-  --bg-subtle: #f1f5f9;
-  --bg-card: #ffffff;
-  
-  /* Typography Colors */
-  --text-main: #0f172a;       /* Deep near-black obsidian */
-  --text-secondary: #475569;  /* Balanced slate gray */
-  --text-muted: #64748b;      /* Muted support text */
-  --text-light: #94a3b8;      /* Low emphasis */
-  --text-inverse: #ffffff;
-  
+  /* Brand Primary & Cyber Accents */
+  --meta-blue: #0066f5;
+  --meta-blue-hover: #0052cc;
+  --meta-blue-light: #38bdf8;
+  --meta-blue-subtle: rgba(0, 102, 245, 0.12);
+  --meta-blue-glow: rgba(0, 102, 245, 0.35);
+
+  --meta-cyan: #00d2ff;
+  --meta-cyan-subtle: rgba(0, 210, 255, 0.12);
+
+  /* Verdict & Threat Posture Colors */
+  --verdict-clean: #00e676;
+  --verdict-clean-bg: rgba(0, 230, 118, 0.12);
+  --verdict-clean-border: rgba(0, 230, 118, 0.3);
+
+  --verdict-threat: #ff3366;
+  --verdict-threat-bg: rgba(255, 51, 102, 0.15);
+  --verdict-threat-border: rgba(255, 51, 102, 0.35);
+
+  --verdict-warning: #ffaa00;
+  --verdict-warning-bg: rgba(255, 170, 0, 0.14);
+  --verdict-warning-border: rgba(255, 170, 0, 0.35);
+
+  --verdict-info: #8b5cf6;
+  --verdict-info-bg: rgba(139, 92, 246, 0.12);
+
+  /* Dark Obsidian / Cyber Navy Surfaces */
+  --meta-bg-base: #070d18;
+  --meta-bg-surface: #0c1424;
+  --meta-bg-card: #111b30;
+  --meta-bg-elevated: #162442;
+  --meta-bg-glass: rgba(17, 27, 48, 0.85);
+
   /* Borders */
-  --border-light: #e2e8f0;
-  --border-subtle: #edf2f7;
-  --border-dark: #1e293b;
-  --border-focus: #eb144c;
-  
-  /* Elevation & Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  --shadow-lg: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
-  --shadow-xl: 0 20px 35px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
-  --shadow-red: 0 10px 25px -3px rgba(235, 20, 76, 0.3);
-  
-  /* Fonts */
+  --meta-border: #1b2a4a;
+  --meta-border-subtle: #24355a;
+  --meta-border-focus: #0066f5;
+  --meta-border-highlight: rgba(0, 210, 255, 0.3);
+
+  /* Text & Typography */
+  --meta-text-primary: #f8fafc;
+  --meta-text-secondary: #cbd5e1;
+  --meta-text-muted: #889bb8;
+  --meta-text-dim: #5c7094;
+
+  /* Typography Fonts */
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Shadows & Glows */
+  --meta-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --meta-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --meta-shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.65);
+  --meta-shadow-cyan: 0 0 20px rgba(0, 210, 255, 0.18);
+  --meta-shadow-blue: 0 0 25px rgba(0, 102, 245, 0.25);
+
   /* Radii */
+  --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-lg: 14px;
   --radius-full: 9999px;
-  
+
   /* Transitions */
   --transition-fast: 0.15s ease;
-  --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }

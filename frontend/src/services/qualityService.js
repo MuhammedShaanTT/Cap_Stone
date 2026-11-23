@@ -1,8 +1,9 @@
-import { request, getAuthToken } from './api';
+import { request, getAuthToken, setAuthToken } from './api';
 
 export const qualityService = {
-  async runQualityAnalysis(projectId) {
-    return await request(`/projects/${projectId}/run-quality-analysis`, {
+  async runQualityAnalysis(projectId, appVersionId = null) {
+    const query = appVersionId ? `?appVersionId=${encodeURIComponent(appVersionId)}` : '';
+    return await request(`/projects/${projectId}/run-quality-analysis${query}`, {
       method: 'POST'
     });
   },
@@ -21,7 +22,6 @@ export const qualityService = {
     }
 
     const token = getAuthToken();
-    // Use direct upload if no versionId specified, otherwise upload to specific version
     const url = versionId && versionId !== 'auto'
       ? `/api/v1/projects/${projectId}/app-versions/${versionId}/upload`
       : `/api/v1/projects/${projectId}/app-versions/upload`;
@@ -39,7 +39,9 @@ export const qualityService = {
         setAuthToken(null);
         localStorage.removeItem('aura_user');
         if (typeof window !== 'undefined') {
-          window.dispatchEvent(new Event('aura:session-expired'));
+          window.dispatchEvent(new CustomEvent('aura:session-expired', {
+            detail: { status: response.status }
+          }));
         }
       }
       let errText = `Upload failed with status: ${response.status}`;

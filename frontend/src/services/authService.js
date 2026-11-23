@@ -6,12 +6,40 @@ export const authService = {
       method: 'POST',
       body: { email, password }
     });
-    if (data.accessToken) {
+
+    if (data && data.accessToken) {
       setAuthToken(data.accessToken);
-      localStorage.setItem('aura_user', JSON.stringify({
+
+      // Use real backend user payload, fallback sensibly
+      const userObj = data.user || {
+        id: data.id || 'u-demo',
+        email: email,
+        displayName: email.split('@')[0],
+        role: data.role || (email.toLowerCase().includes('admin') ? 'ADMIN' : 'MEMBER')
+      };
+
+      localStorage.setItem('aura_user', JSON.stringify(userObj));
+      return { ...data, user: userObj };
+    }
+    return data;
+  },
+
+  async register(email, password, displayName = '', role = 'MEMBER') {
+    const data = await request('/auth/register', {
+      method: 'POST',
+      body: { email, password, displayName, role }
+    });
+
+    if (data && data.accessToken) {
+      setAuthToken(data.accessToken);
+      const userObj = data.user || {
+        id: data.id || 'u-registered',
         email,
-        role: email.includes('admin') ? 'ADMIN' : 'DEVELOPER'
-      }));
+        displayName: displayName || email.split('@')[0],
+        role
+      };
+      localStorage.setItem('aura_user', JSON.stringify(userObj));
+      return { ...data, user: userObj };
     }
     return data;
   },

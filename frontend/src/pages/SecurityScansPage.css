@@ -1,0 +1,209 @@
+/* ==========================================================================
+   METADEFENDER SECURITY SCANS PAGE STYLES
+   ========================================================================== */
+.meta-scans-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.meta-scan-trigger-card {
+  background: var(--meta-bg-card);
+  border: 1px solid var(--meta-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--meta-shadow-md);
+}
+
+.meta-scan-trigger-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--meta-border);
+  padding-bottom: 0.75rem;
+}
+
+.meta-scan-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-scan-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.meta-scan-field {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.meta-scan-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--meta-text-secondary);
+}
+
+/* Timeline */
+.meta-scan-timeline {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--meta-bg-surface);
+  border: 1px solid var(--meta-border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+}
+
+.meta-timeline-step {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  opacity: 0.4;
+  transition: opacity var(--transition-fast);
+}
+
+.meta-timeline-step.active {
+  opacity: 1;
+}
+
+.meta-timeline-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--meta-bg-elevated);
+  border: 1px solid var(--meta-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--meta-text-dim);
+}
+
+.meta-timeline-step.active .meta-timeline-dot {
+  background: var(--meta-blue);
+  color: #fff;
+  border-color: var(--meta-cyan);
+}
+
+.meta-timeline-step.completed .meta-timeline-dot {
+  background: var(--verdict-clean);
+  color: #000;
+  border-color: var(--verdict-clean);
+}
+
+.meta-timeline-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.meta-timeline-desc {
+  font-size: 0.72rem;
+  color: var(--meta-text-muted);
+}
+
+/* Results section */
+.meta-scan-results-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.meta-verdict-card {
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-verdict-card.verdict-hold {
+  background: linear-gradient(135deg, rgba(255, 51, 102, 0.15) 0%, rgba(17, 27, 48, 0.95) 100%);
+  border: 1px solid var(--verdict-threat-border);
+}
+
+.meta-verdict-card.verdict-pass {
+  background: linear-gradient(135deg, rgba(0, 230, 118, 0.15) 0%, rgba(17, 27, 48, 0.95) 100%);
+  border: 1px solid var(--verdict-clean-border);
+}
+
+.meta-verdict-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.meta-verdict-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.meta-verdict-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.meta-verdict-heading {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.meta-verdict-sub {
+  font-size: 0.8rem;
+  color: var(--meta-text-secondary);
+  margin-top: 2px;
+}
+
+/* Engine Grid */
+.meta-scan-engines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.meta-engine-card {
+  background: var(--meta-bg-card);
+  border: 1px solid var(--meta-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-engine-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-engine-status {
+  align-self: flex-start;
+}
+
+.meta-engine-desc {
+  font-size: 0.78rem;
+  color: var(--meta-text-secondary);
+  line-height: 1.45;
+}

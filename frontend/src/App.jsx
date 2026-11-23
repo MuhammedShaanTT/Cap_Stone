@@ -1,72 +1,82 @@
-import React, { useState } from 'react';
-import './styles/tokens.css';
-import './styles/base.css';
+import React from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
 
-import Navbar from './components/Navbar/Navbar';
-import Hero from './components/Hero/Hero';
-import TrustBar from './components/Trust/TrustBar';
-import FeaturesSection from './components/Features/FeaturesSection';
-import ArchitectureSection from './components/Architecture/ArchitectureSection';
-import IntegrationsSection from './components/Integrations/IntegrationsSection';
-import BenefitsSection from './components/Benefits/BenefitsSection';
-import StoriesSection from './components/Stories/StoriesSection';
-import CtaBanner from './components/CTA/CtaBanner';
-import Footer from './components/Footer/Footer';
-import ControlPlaneModal from './components/Console/ControlPlaneModal';
+// Pages
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import ProjectListPage from './pages/ProjectListPage';
+import ProjectDashboardPage from './pages/ProjectDashboardPage';
+import AppVersionsPage from './pages/AppVersionsPage';
+import TestCasesPage from './pages/TestCasesPage';
+import SecurityScansPage from './pages/SecurityScansPage';
+import FindingsPage from './pages/FindingsPage';
+import HealingPage from './pages/HealingPage';
+import ProjectSettingsPage from './pages/ProjectSettingsPage';
+import NotFoundPage from './pages/NotFoundPage';
+
+// Layout
+import AppShell from './components/Layout/AppShell';
+
+/**
+ * Route protector checking JWT authentication state
+ */
+function ProtectedRoute() {
+  const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'var(--meta-bg-base)',
+        color: 'var(--meta-cyan)'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div className="meta-spinner" />
+          <p style={{ marginTop: '1rem', fontSize: '0.9rem' }}>Verifying security credentials...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <AppShell />;
+}
 
 export default function App() {
-  const [consoleOpen, setConsoleOpen] = useState(false);
-  const [consoleInitialView, setConsoleInitialView] = useState('dashboard');
-
-  const handleOpenConsole = (view = 'dashboard') => {
-    setConsoleInitialView(view);
-    setConsoleOpen(true);
-  };
-
-  const handleCloseConsole = () => {
-    setConsoleOpen(false);
-  };
-
   return (
-    <div className="aura-app">
-      {/* 1. Sticky Navigation Bar */}
-      <Navbar onOpenConsole={handleOpenConsole} />
+    <Routes>
+      {/* 1. Public Marketing Landing Page */}
+      <Route path="/" element={<LandingPage />} />
 
-      <main>
-        {/* 2. Hero Section with Interactive Preview */}
-        <Hero onOpenConsole={handleOpenConsole} />
+      {/* 2. Standalone MetaDefender Authentication */}
+      <Route path="/login" element={<LoginPage />} />
 
-        {/* 3. Customer Trust & Credibility Bar */}
-        <TrustBar />
+      {/* 3. Authenticated Control Plane Shell */}
+      <Route path="/app" element={<ProtectedRoute />}>
+        <Route index element={<Navigate to="/app/projects" replace />} />
+        <Route path="projects" element={<ProjectListPage />} />
+        <Route path="projects/:projectId/dashboard" element={<ProjectDashboardPage />} />
+        <Route path="projects/:projectId/versions" element={<AppVersionsPage />} />
+        <Route path="projects/:projectId/test-cases" element={<TestCasesPage />} />
+        <Route path="projects/:projectId/scans" element={<SecurityScansPage />} />
+        <Route path="projects/:projectId/findings" element={<FindingsPage />} />
+        <Route path="projects/:projectId/healing" element={<HealingPage />} />
+        <Route path="projects/:projectId/settings" element={<ProjectSettingsPage />} />
+      </Route>
 
-        {/* 4. Product & Feature Showcase (Alternating Rows) */}
-        <FeaturesSection onOpenConsole={handleOpenConsole} />
+      {/* 4. Legacy redirect fallback */}
+      <Route path="/projects/*" element={<Navigate to="/app/projects" replace />} />
 
-        {/* 5. Platform Architecture Workflow (5-Phase Pipeline) */}
-        <ArchitectureSection onOpenConsole={handleOpenConsole} />
-
-        {/* 6. Integrations Showcase */}
-        <IntegrationsSection />
-
-        {/* 7. Benefits and Enterprise Outcomes */}
-        <BenefitsSection />
-
-        {/* 8. Customer Success Case Studies */}
-        <StoriesSection />
-
-        {/* 9. Final High-Impact Conversion CTA */}
-        <CtaBanner onOpenConsole={handleOpenConsole} />
-      </main>
-
-      {/* 10. Comprehensive Footer */}
-      <Footer onOpenConsole={handleOpenConsole} />
-
-      {/* 11. Interactive Live Control Plane (Modal Overlay) */}
-      <ControlPlaneModal
-        isOpen={consoleOpen}
-        onClose={handleCloseConsole}
-        initialView={consoleInitialView}
-      />
-    </div>
+      {/* 5. 404 Catch-All */}
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }

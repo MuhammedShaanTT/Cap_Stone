@@ -1,0 +1,171 @@
+/* ==========================================================================
+   METADEFENDER HEALING PAGE STYLES
+   ========================================================================== */
+.meta-healing-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.meta-how-healing-works {
+  background: var(--meta-bg-card);
+  border: 1px solid var(--meta-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.meta-how-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 220px;
+}
+
+.meta-how-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--meta-cyan);
+  line-height: 1;
+}
+
+.meta-how-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-how-info strong {
+  font-size: 0.82rem;
+  color: #fff;
+}
+
+.meta-how-info span {
+  font-size: 0.72rem;
+  color: var(--meta-text-muted);
+}
+
+.meta-how-divider {
+  color: var(--meta-border-subtle);
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .meta-how-divider {
+    display: none;
+  }
+}
+
+.meta-proposals-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.meta-proposal-card {
+  background: var(--meta-bg-card);
+  border: 1px solid var(--meta-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--meta-shadow-md);
+}
+
+.meta-proposal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--meta-border);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.meta-proposal-head-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.meta-proposal-icon {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.meta-proposal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.meta-proposal-target {
+  font-size: 0.76rem;
+  color: var(--meta-blue-light);
+  margin-top: 2px;
+}
+
+.meta-proposal-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.meta-proposal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.meta-proposal-hypo-box {
+  background: var(--meta-bg-surface);
+  border: 1px solid var(--meta-border);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  font-size: 0.82rem;
+  color: var(--meta-text-secondary);
+  line-height: 1.5;
+}
+
+.meta-proposal-hypo-box strong {
+  color: #fff;
+}
+
+.meta-proposal-diff-box {
+  background: #020612;
+  border: 1px solid var(--meta-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.meta-diff-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--meta-text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.35rem;
+}
+
+.meta-diff-pre {
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--verdict-clean);
+}
+
+.meta-proposal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
