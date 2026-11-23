@@ -27,7 +27,7 @@ export default function DefectScanner({ projectId, onScanComplete }) {
   return (
     <div className="console-card">
       <div className="console-card-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span>🔍 Automated Quality, Defect & Self-Healing Scanner</span>
+        <span>🔍 Automated Quality & Defect Analysis</span>
         <span style={{
           fontSize: '0.7rem',
           background: 'linear-gradient(135deg, rgba(37,99,235,0.2), rgba(235,20,76,0.2))',
@@ -37,12 +37,12 @@ export default function DefectScanner({ projectId, onScanComplete }) {
           borderRadius: '12px',
           fontWeight: 600
         }}>
-          ✨ Gemini 2.5 AI Integrated
+          Prototype analysis
         </span>
       </div>
       <p style={{ fontSize: '0.82rem', color: '#94a3b8', marginBottom: '1rem' }}>
-        Executes SAST static analysis for OWASP vulnerabilities and leverages <strong>Google Gemini 2.5 AI</strong> for
-        intelligent error remediation suggestions and failure diagnosis.
+        Runs the current MVP quality-analysis workflow and presents generated findings, summaries, and proposed remediation.
+        Real scanner execution and device-based tests are planned for a later phase.
       </p>
 
       <button
@@ -51,7 +51,7 @@ export default function DefectScanner({ projectId, onScanComplete }) {
         className="btn btn-sauce"
         style={{ width: '100%' }}
       >
-        {scanning ? '⚡ Gemini AI & SAST Scanning in Progress...' : '⚡ Trigger Automated Defect Analysis Now'}
+        {scanning ? '⚡ Generating analysis...' : '⚡ Run automated defect analysis'}
       </button>
 
       {error && (
@@ -74,7 +74,7 @@ export default function DefectScanner({ projectId, onScanComplete }) {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                 <span style={{ fontSize: '1.1rem' }}>✨</span>
-                <strong style={{ fontSize: '0.88rem', color: '#38bdf8' }}>Gemini AI Executive Quality Assessment:</strong>
+                <strong style={{ fontSize: '0.88rem', color: '#38bdf8' }}>AI-assisted quality assessment:</strong>
               </div>
               <div style={{ fontSize: '0.82rem', color: '#e2e8f0', lineHeight: 1.6 }}>
                 {result.aiQualitySummary}
@@ -117,7 +117,7 @@ export default function DefectScanner({ projectId, onScanComplete }) {
                 <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#38bdf8' }}>
                   ⚡ AI Self-Healing Locator Proposal
                 </div>
-                <span style={{ fontSize: '0.72rem', background: '#065f46', color: '#34d399', padding: '2px 6px', borderRadius: '4px' }}>
+                <span style={{ fontSize: '0.72rem', background: '#854d0e', color: '#fde68a', padding: '2px 6px', borderRadius: '4px' }}>
                   {(result.healingProposal.confidence * 100).toFixed(0)}% Confidence
                 </span>
               </div>
@@ -144,7 +144,7 @@ export default function DefectScanner({ projectId, onScanComplete }) {
             <div>
               <div style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between' }}>
                 <span>Detected Security Defect Findings ({result.securityFindings.length})</span>
-                <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Auto-scanned from Bytecode & Manifest</span>
+                <span style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Generated MVP findings</span>
               </div>
               <div className="findings-list">
                 {result.securityFindings.map(f => {
