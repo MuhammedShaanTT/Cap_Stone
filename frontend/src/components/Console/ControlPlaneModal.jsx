@@ -19,8 +19,8 @@ const SECURITY_NAV = [
   { id: 'security-roadmap', label: 'Security roadmap', icon: '→' }
 ];
 
-export default function ControlPlaneModal({ isOpen, onClose, initialView = 'dashboard' }) {
-  const [mode, setMode] = useState('testing');
+export default function ControlPlaneModal({ isOpen, onClose, initialView = 'dashboard', initialMode = 'testing' }) {
+  const [mode, setMode] = useState(initialMode);
   const [section, setSection] = useState(initialView === 'defect-test' ? 'analysis' : 'overview');
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
@@ -34,9 +34,10 @@ export default function ControlPlaneModal({ isOpen, onClose, initialView = 'dash
 
   useEffect(() => {
     if (!isOpen) return;
+    setMode(initialMode);
     setSection(initialView === 'defect-test' ? 'analysis' : 'overview');
     checkAuthAndLoad();
-  }, [isOpen, initialView]);
+  }, [isOpen, initialView, initialMode]);
 
   const checkAuthAndLoad = async () => {
     if (!authService.isAuthenticated()) {

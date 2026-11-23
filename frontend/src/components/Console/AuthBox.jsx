@@ -7,19 +7,6 @@ export default function AuthBox({ onAuthenticated }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleQuickLogin = async (userEmail) => {
-    setLoading(true);
-    setError(null);
-    try {
-      await authService.login(userEmail, 'password123');
-      onAuthenticated();
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleCustomLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -37,10 +24,10 @@ export default function AuthBox({ onAuthenticated }) {
   return (
     <div style={{ maxWidth: '440px', margin: '2rem auto', textAlign: 'center' }}>
       <h3 style={{ color: '#fff', fontSize: '1.4rem', marginBottom: '0.5rem' }}>
-        Access Quality Platform Console
+        Sign in to Aura Quality Console
       </h3>
       <p style={{ color: '#94a3b8', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
-        Connect to your running backend at <code className="code-inline">http://localhost:8080</code>
+        Use an authorized workspace account.
       </p>
 
       {error && (
@@ -48,30 +35,6 @@ export default function AuthBox({ onAuthenticated }) {
           {error}
         </div>
       )}
-
-      {/* Quick 1-Click Demo Buttons */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
-        <button
-          onClick={() => handleQuickLogin('admin@example.com')}
-          disabled={loading}
-          className="btn btn-sauce"
-          style={{ width: '100%' }}
-        >
-          {loading ? 'Authenticating...' : '⚡ Quick Sign In as Demo Admin (admin@example.com)'}
-        </button>
-        <button
-          onClick={() => handleQuickLogin('developer@example.com')}
-          disabled={loading}
-          className="btn btn-outline"
-          style={{ width: '100%', color: '#fff', borderColor: '#475569' }}
-        >
-          Sign In as Developer (developer@example.com)
-        </button>
-      </div>
-
-      <div style={{ position: 'relative', margin: '1.5rem 0', color: '#64748b', fontSize: '0.8rem' }}>
-        <span>OR ENTER CREDENTIALS</span>
-      </div>
 
       <form onSubmit={handleCustomLogin} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
         <input
